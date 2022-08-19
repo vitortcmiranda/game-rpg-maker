@@ -3,3 +3,6 @@ spring:
     url: r2dbc:postgresql://localhost:5454/
     username: postgres
     password: password
+server:
+  error:
+    include-message: always
