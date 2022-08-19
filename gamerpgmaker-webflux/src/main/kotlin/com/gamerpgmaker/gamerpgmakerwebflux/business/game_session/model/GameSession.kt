@@ -11,6 +11,7 @@ data class GameSession(
     val id: UUID? = null, //postgress will create the id for us with gen_random_uuid ()
     val playerAmount: Int,
     val hoursPlayed: Int,
-    var createdAt: Instant = Instant.now(),
+    val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
+    val sessionName: String
 )

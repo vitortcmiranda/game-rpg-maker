@@ -8,5 +8,6 @@ data class GameSessionRequest(
     val playersAmount: Int = 0,
     val hoursPlayed: Int = 0,
     var createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now()
+    val updatedAt: Instant = Instant.now(),
+    val sessionName: String
 )

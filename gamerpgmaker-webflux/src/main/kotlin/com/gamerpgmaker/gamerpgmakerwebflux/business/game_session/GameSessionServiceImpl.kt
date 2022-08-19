@@ -25,6 +25,7 @@ class GameSessionServiceImpl(
             GameSession(
                 playerAmount = request.playersAmount,
                 hoursPlayed = request.hoursPlayed,
+                sessionName = request.sessionName
             )
         )
 }
