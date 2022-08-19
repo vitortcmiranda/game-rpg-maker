@@ -8,3 +8,8 @@ import java.lang.RuntimeException
 data class NotFoundException(
     val msg: String
 ) : RuntimeException(msg)
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+data class BadRequestException(
+    val msg: String
+) : RuntimeException(msg)
