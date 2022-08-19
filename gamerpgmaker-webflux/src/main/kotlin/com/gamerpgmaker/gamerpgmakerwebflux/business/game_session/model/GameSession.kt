@@ -8,9 +8,9 @@ import java.util.UUID
 @Table("game_session")
 data class GameSession(
     @Id
-    val id: UUID,
-    val playerAmount: Int = 0,
-    val hoursPlayed: Int = 0,
-    var createdAt: Instant,
-    val updatedAt: Instant
+    val id: UUID? = null, //postgress will create the id for us with gen_random_uuid ()
+    val playerAmount: Int,
+    val hoursPlayed: Int,
+    var createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now(),
 )

@@ -1,6 +1,7 @@
 package com.gamerpgmaker.gamerpgmakerwebflux.business.game_session
 
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSession
+import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionRequest
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.NotFoundException
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.repository.GameSessionRepository
 import org.springframework.stereotype.Service
@@ -18,4 +19,12 @@ class GameSessionServiceImpl(
             NotFoundException("Game session with id $id was not found.")
         )
     )
+
+    override fun createGameSession(request: GameSessionRequest): Mono<GameSession> =
+        gameSessionRepository.save(
+            GameSession(
+                playerAmount = request.playersAmount,
+                hoursPlayed = request.hoursPlayed,
+            )
+        )
 }
