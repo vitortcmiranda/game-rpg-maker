@@ -3,15 +3,24 @@ package com.gamerpgmaker.gamerpgmakerwebflux.webservice.controller.game_session
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.GameSessionService
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSession
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionRequest
+import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionResponse
+import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.toGameSessionResponse
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import java.util.UUID
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/game/sessions")
@@ -22,9 +31,24 @@ class GameSessionController(
     fun getAll(): Flux<GameSession> = gameSessionService.findAll()
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: UUID): Mono<GameSession> = gameSessionService.findById(id)
+    fun getById(@PathVariable id: UUID): Mono<GameSessionResponse> = gameSessionService.findById(id).flatMap {
+        it.toGameSessionResponse().toMono()
+    }
 
     @PostMapping("")
-    fun createGameSession(@RequestBody gameSessionRequest: GameSessionRequest): Mono<GameSession> =
+    fun createGameSession(@Valid @RequestBody gameSessionRequest: GameSessionRequest): Mono<GameSession> =
         gameSessionService.createGameSession(gameSessionRequest)
+
+
+    @PutMapping("/{id}")
+    fun updateGameSession(
+        @Valid @RequestBody gameSessionRequest: GameSessionRequest,
+        @PathVariable id: UUID
+    ): Mono<GameSession> = gameSessionService.updateSession(id, gameSessionRequest)
+
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteGameSession(@PathVariable id: UUID): Mono<Void> =
+        gameSessionService.deleteGameSession(id)
 }

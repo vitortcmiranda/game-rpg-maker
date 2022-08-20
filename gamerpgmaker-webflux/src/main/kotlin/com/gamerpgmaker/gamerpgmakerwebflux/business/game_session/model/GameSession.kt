@@ -13,5 +13,10 @@ data class GameSession(
     val hoursPlayed: Int,
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
-    val sessionName: String
+    val sessionName: String? = null,
+    val status: SessionStatus = SessionStatus.CREATED
 )
+
+enum class SessionStatus {
+    CREATED, ONGOING, STOPPED, FINISHED
+}

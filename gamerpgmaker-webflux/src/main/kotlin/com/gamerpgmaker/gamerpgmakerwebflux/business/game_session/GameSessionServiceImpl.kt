@@ -1,15 +1,12 @@
 package com.gamerpgmaker.gamerpgmakerwebflux.business.game_session
 
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.BadRequestException
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSession
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionRequest
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.NotFoundException
+import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.*
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.repository.GameSessionRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
-import java.util.UUID
+import java.util.*
 
 @Service
 class GameSessionServiceImpl(
@@ -35,5 +32,25 @@ class GameSessionServiceImpl(
             )
         }
 
+    override fun deleteGameSession(id: UUID): Mono<Void> = gameSessionRepository.findById(id).flatMap {
+        gameSessionRepository.deleteById(id)
+    }
+
+    override fun updateSession(id: UUID, request: GameSessionRequest): Mono<GameSession> =
+        findById(id).flatMap { foundSession ->
+            gameSessionRepository.save(
+                GameSession(
+                    playerAmount = request.playersAmount,
+                    hoursPlayed = request.hoursPlayed,
+                    updatedAt = request.updatedAt,
+                    sessionName = request.sessionName,
+                    id = foundSession.id,
+                    createdAt = foundSession.createdAt,
+                    status = foundSession.status
+                )
+            )
+        }.switchIfEmpty {
+            Mono.error(BadRequestException("Game session id '${request.id}' does not exists."))
+        }
 
 }
