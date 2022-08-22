@@ -1,5 +1,7 @@
 package com.gamerpgmaker.gamerpgmakerwebflux.business.game_session
 
+import com.gamerpgmaker.gamerpgmakerwebflux.api.game_session.GameSessionRequest
+import com.gamerpgmaker.gamerpgmakerwebflux.api.game_session.GameSessionResponse
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.*
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.repository.GameSessionRepository
 import org.springframework.stereotype.Service
@@ -36,7 +38,7 @@ class GameSessionServiceImpl(
         gameSessionRepository.deleteById(id)
     }
 
-    override fun updateSession(id: UUID, request: GameSessionRequest): Mono<GameSession> =
+    override fun updateSession(id: UUID, request: GameSessionRequest): Mono<GameSessionResponse> =
         findById(id).flatMap { foundSession ->
             gameSessionRepository.save(
                 GameSession(
@@ -48,7 +50,7 @@ class GameSessionServiceImpl(
                     createdAt = foundSession.createdAt,
                     status = foundSession.status
                 )
-            )
+            ).map { it.toGameSessionResponse() }
         }.switchIfEmpty {
             Mono.error(BadRequestException("Game session id '${request.id}' does not exists."))
         }

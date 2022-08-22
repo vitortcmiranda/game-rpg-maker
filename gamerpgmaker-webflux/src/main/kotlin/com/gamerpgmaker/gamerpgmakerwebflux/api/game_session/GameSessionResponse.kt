@@ -1,4 +1,4 @@
-package com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model
+package com.gamerpgmaker.gamerpgmakerwebflux.api.game_session
 
 import java.time.Instant
 import java.util.UUID

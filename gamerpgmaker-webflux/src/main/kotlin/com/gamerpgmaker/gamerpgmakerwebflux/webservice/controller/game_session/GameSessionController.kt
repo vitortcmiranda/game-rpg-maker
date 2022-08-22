@@ -2,8 +2,8 @@ package com.gamerpgmaker.gamerpgmakerwebflux.webservice.controller.game_session
 
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.GameSessionService
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSession
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionRequest
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.GameSessionResponse
+import com.gamerpgmaker.gamerpgmakerwebflux.api.game_session.GameSessionRequest
+import com.gamerpgmaker.gamerpgmakerwebflux.api.game_session.GameSessionResponse
 import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.toGameSessionResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
@@ -44,7 +43,7 @@ class GameSessionController(
     fun updateGameSession(
         @Valid @RequestBody gameSessionRequest: GameSessionRequest,
         @PathVariable id: UUID
-    ): Mono<GameSession> = gameSessionService.updateSession(id, gameSessionRequest)
+    ): Mono<GameSessionResponse> = gameSessionService.updateSession(id, gameSessionRequest)
 
 
     @DeleteMapping("/{id}")
