@@ -34,13 +34,16 @@ class GameSessionServiceImpl(
             )
         }
 
-    override fun deleteGameSession(id: UUID): Mono<Void> = gameSessionRepository.findById(id).flatMap {
-        gameSessionRepository.deleteById(id)
-    }.switchIfEmpty(
-        Mono.error(
-            NotFoundException("Game session with id $id was not found.")
-        )
-    )
+    override fun deleteGameSession(id: UUID): Mono<Void> = findById(id).flatMap { gameSessionRepository.delete(it) }
+
+
+//        gameSessionRepository.findById(id).flatMap {
+//            gameSessionRepository.deleteById(id)
+//        }.switchIfEmpty(
+//            Mono.error(
+//                NotFoundException("Game session with id $id was not found.")
+//            )
+//        )
 
     override fun updateSession(id: UUID, request: GameSessionRequest): Mono<GameSessionResponse> =
         findById(id).flatMap { foundSession ->

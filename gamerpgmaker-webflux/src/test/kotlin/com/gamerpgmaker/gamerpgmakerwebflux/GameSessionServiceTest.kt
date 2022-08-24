@@ -97,7 +97,7 @@ class GameSessionServiceTest(
     fun `should delete gameSession when successful`() {
         val id = UUID.randomUUID()
         every { gameSessionRepository.findById(id) } answers { buildGameSession().toMono() }
-        every { gameSessionRepository.deleteById(id) } answers {
+        every { gameSessionRepository.delete(any()) } answers {
             Mono.empty()
         }
         gameSessionService.deleteGameSession(id)
@@ -114,7 +114,6 @@ class GameSessionServiceTest(
             .expectError()
     }
 
-
     fun buildGameSession(
         id: UUID = UUID.randomUUID(),
         playersAmount: Int = 0,
@@ -126,6 +125,4 @@ class GameSessionServiceTest(
         createdAt = Instant.now(),
         sessionName = "test"
     )
-
-
 }
