@@ -11,4 +11,6 @@ data class GameSessionRequest(
     var createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now(),
     @field: NotBlank val sessionName: String
-)
+) {
+
+}

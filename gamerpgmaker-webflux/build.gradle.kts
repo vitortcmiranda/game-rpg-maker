@@ -27,6 +27,7 @@ dependencies {
 	runtimeOnly("org.postgresql:r2dbc-postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("io.mockk:mockk:1.12.4")
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.2")
 }
 

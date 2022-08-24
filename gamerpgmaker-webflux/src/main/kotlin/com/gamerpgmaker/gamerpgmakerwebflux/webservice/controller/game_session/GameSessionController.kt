@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
 import reactor.kotlin.core.publisher.toMono
 import java.util.UUID
 import javax.validation.Valid
@@ -27,7 +28,7 @@ class GameSessionController(
     private val gameSessionService: GameSessionService
 ) {
     @GetMapping("")
-    fun getAll(): Flux<GameSession> = gameSessionService.findAll()
+    fun getAll(): Flux<GameSessionResponse> = gameSessionService.findAll().map { it.toGameSessionResponse() }
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): Mono<GameSessionResponse> = gameSessionService.findById(id).flatMap {
