@@ -29,6 +29,9 @@ dependencies {
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("io.mockk:mockk:1.12.4")
 	implementation("org.springframework.boot:spring-boot-starter-validation:2.7.2")
+	implementation("org.springdoc:springdoc-openapi-webflux-core:1.6.11")
+	implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.11")
+
 }
 
 tasks.withType<KotlinCompile> {
