@@ -36,8 +36,8 @@ class GameSessionController(
     }
 
     @PostMapping("")
-    fun createGameSession(@Valid @RequestBody gameSessionRequest: GameSessionRequest): Mono<GameSession> =
-        gameSessionService.createGameSession(gameSessionRequest)
+    fun createGameSession(@Valid @RequestBody gameSessionRequest: GameSessionRequest): Mono<GameSessionResponse> =
+        gameSessionService.createGameSession(gameSessionRequest).flatMap { it.toGameSessionResponse().toMono() }
 
 
     @PutMapping("/{id}")
