@@ -1,6 +1,5 @@
 package com.gamerpgmaker.gamerpgmakerwebflux.business.game.model
 
-import com.gamerpgmaker.gamerpgmakerwebflux.business.game_session.model.SessionStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
@@ -15,11 +14,11 @@ data class Game(
     val gameName: String,
     val gameMasterName: String,
     val playersAmount: Int,
-    val status: SessionStatus = SessionStatus.CREATED,
+    val status: GameStatus = GameStatus.CREATED,
     val createdAt: Instant = Instant.now(),
     val updatedAt: Instant = Instant.now()
 )
 
-enum class SessionStatus {
+enum class GameStatus {
     CREATED, ONGOING, STOPPED, FINISHED
 }

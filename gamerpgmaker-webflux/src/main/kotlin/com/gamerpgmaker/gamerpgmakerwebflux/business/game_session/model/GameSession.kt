@@ -9,14 +9,7 @@ import java.util.UUID
 data class GameSession(
     @Id
     val id: UUID? = null, //postgress will create the id for us with gen_random_uuid ()
-    val playerAmount: Int,
-    val hoursPlayed: Int,
+    val gameId: UUID,
     val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now(),
-    val sessionName: String? = null,
-    val status: SessionStatus = SessionStatus.CREATED
+    val updatedAt: Instant = Instant.now()
 )
-
-enum class SessionStatus {
-    CREATED, ONGOING, STOPPED, FINISHED
-}
