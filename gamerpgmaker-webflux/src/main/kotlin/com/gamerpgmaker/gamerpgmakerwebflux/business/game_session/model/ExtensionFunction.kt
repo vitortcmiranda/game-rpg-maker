@@ -6,10 +6,9 @@ import com.gamerpgmaker.gamerpgmakerwebflux.business.game.model.Game
 
 fun GameSession.toGameSessionResponse() = GameSessionResponse(
     id = this.id!!,
-    sessionName = this.sessionName,
-    playersAmount = this.playerAmount,
-    hoursPlayed = this.hoursPlayed,
+    gameId = this.gameId,
     createdAt = this.createdAt,
+    updatedAt = this.updatedAt,
 )
 
 fun Game.toGameResponse() = GameResponse(
